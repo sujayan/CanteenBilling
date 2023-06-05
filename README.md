@@ -1,6 +1,6 @@
 # Cateen Billing system
 
-this new branches
+this new branches v2
 
 ## Project Idea
 1. Canteen can login
