@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\EmployeeExpense;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class EmployeeController extends Controller
@@ -72,16 +73,18 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        $employeeExpenses = $employee->employeeExpenses;
-        foreach ($employeeExpenses as $employeeExpense) {
-            if ($employeeExpense->pending <> 0) {
-                return back()->with('message', 'Clear Expenses first');
-            }
-            $employeeExpense->update([
-                'employeeStatus' => 'Not Employed'
-            ]);
+        $employeeExpensesCount = $employee->employeeExpenses()
+            ->where('pending', '!=', 0)
+            ->count();
+
+        if($employeeExpensesCount) {
+            return back()->with('message', 'Clear Expenses first');
         }
        
+        EmployeeExpense::query()->where('employee_id', $employee->id)->update([
+            'employeeStatus' => 'Not Employed'
+        ]);
+        
         $employee->delete();
         return redirect(route('employee.index'))->with('message', 'Employee deleted');
     }

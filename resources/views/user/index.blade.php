@@ -16,54 +16,67 @@
                     @include('partials._search')
                 </div>
                 <table class='ml-3 text-center'>
-                    @if(count($users))
-                    <tr>
-                        <th>
-                            Name
-                          
-                        </th>
-                        <th>  Role</th>
-                    </tr>
+                    @if (count($users))
+                        <tr>
+                            <th>
+                                Name
+
+                            </th>
+                            <th> Role</th>
+                        </tr>
                     @endif
-             
-                @forelse ($users as $user)
-                <tr>
-                    <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                        {{$user->name}}
-                    </td>
-                    <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                       {{$user->role}} 
-                    </td>
-                    <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                        <a href="{{ route('user.edit', $user->id) }}" class="underline">Edit</a>
-                           
-                    </td>
-                    <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                        <form class="ml-2" action="{{ route('user.destroy', $user->id) }}" method="POST"
-                            onsubmit="return confirm('Are you sure?')">
-                            @method('delete')
-                            @csrf
-                            <button class="underline">Delete</button>
-                        </form>
-                    </td>
-                
-                        <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                            <a href="{{ route('user.createNewPassword', $user->id) }}" onclick="return confirm('Are you sure?')" class="underline">New password</a>
-                               
-                        </td>
-                    </td>
-                </tr>
-              
-                @empty
-                    <p>No user found</p>
-                @endforelse
-            </table>
+
+                    @forelse ($users as $user)
+                        <tr>
+                            <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+                                {{ $user->name }}
+                            </td>
+                            <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+                                {{ $user->role }}
+                            </td>
+                            <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+                                <a href="{{ route('user.edit', $user->id) }}" class="underline">Edit</a>
+
+                            </td>
+                            <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
+                                <form class="ml-2" action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure?')">
+                                    @method('delete')
+                                    @csrf
+                                    <button class="underline">Delete</button>
+                                </form>
+                            </td>
+
+                            <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">ff
+                                <!-- Small modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bd-example-modal-sm">Small modal</button>
+
+                                {{-- <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            ...
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                {{-- <a href="{{ route('user.createNewPassword', $user->id) }}" --}}
+                                    {{-- onclick="return confirm('Are you sure?')" class="underline">New password</a> --}}
+
+                            </td>
+                            </td>
+                        </tr>
+
+                    @empty
+                        <p>No user found</p>
+                    @endforelse
+                </table>
             </div>
         </div>
     </div>
     {{-- paginate link --}}
     <div class="mt-6 p-10">
-       
-         {{ $users->withQueryString()->links() }}
-     </div>
+
+        {{ $users->withQueryString()->links() }}
+    </div>
 </x-app-layout>

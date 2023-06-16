@@ -75,7 +75,7 @@
                     <tr>
 
                         <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
-                            <x-input-label for="date" :value="__(App\Models\Expense::getDate($expense->created_at))" />
+                            <x-input-label for="date" :value="_($expense->created_at->toDateString())" />
                         </td>
                         <td class="px-4 py-8 border-t border-b border-gray-300 text-lg">
                             <x-input-label for="name" :value="__($expense->dish_name)" />
